@@ -4,7 +4,6 @@
 Parsnip is currently in a beta release state and is intended for early adopters. Users may experience issues, bugs and missing features. Those experiencing difficulties with Parsnip should create a GitHub issue.
 
 ## Overview
-<<<<<<< HEAD
 Parsnip assists in writing protocol parsers for the open-source network security monitoring tool [Zeek](https://github.com/zeek/zeek.git). It was designed for Industrial Control Systems (ICS) protocols but applies to any protocol.
 
 The ecosystem has four components:
@@ -12,27 +11,10 @@ The ecosystem has four components:
 2. An intermediate language (IL) — a set of JSON files with typed keywords — that the GUI produces and the compiler consumes.
 3. A Flask/SQLAlchemy backend that stores IL entities in Postgres and emits a zipped parser package (Spicy, Zeek, and event files).
 4. A compiler leveraged by the backend to produce the Zeek/Spicy parser
-=======
-Parsnip is a program developed to assist in the parsing of protocols using the open source network security monitoring tool [Zeek](https://github.com/zeek/zeek.git). Parsnip is specifically designed to be applied towards developing Industrial Control Systems (ICS) protocol parsers but can be applied to any protocol.
-
-The Parsnip ecosystem consists of three parts:
-1. A GUI interface designed provide a visual representation of a protocol's packet structure
-2. JSON files in an intermediate language (IL) that is fed into the backend. This intermediate language is made up of a set of JSON structures using keywords for each key-value pair to indicate it's type. 
-3. A backend that performs processing on the parsnip IL files and outputs the spicy, zeek and event files necessary for a parser
->>>>>>> main
 
 ## Project structure
 
-<<<<<<< HEAD
 The superproject tracks three git submodules plus shared top-level orchestration:
-=======
-* backend: folder containing the code for the backend; used for processing parsnip IL files to create zeek parsers
-* docs: folder containing project documentation
-* frontend: folder containing the code for the web frontend; used for creating parsnip IL files
-* LICENSE.txt: code license file
-* NOTICE.txt: code notice file
-* README.md: this file
->>>>>>> main
 
 | path | purpose |
 | --- | --- |
