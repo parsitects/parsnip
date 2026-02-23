@@ -24,6 +24,20 @@ The Parsnip ecosystem consists of three parts:
 
 Please refer to [docs/parsnip.md](docs/parsnip.md) for more information on using Parsnip.
 
+## Docker Workflows
+
+The repository supports both module-level and root-level Docker Compose workflows.
+
+Standalone submodule workflows:
+- Frontend: `cd parsnip-frontend && docker compose up --build`
+- Backend: `cd parsnip-backend && docker compose up --build`
+- Compiler: `cd parsnip-compiler && docker compose run --rm compiler /input /output`
+
+Root-level workflows:
+- UI/API stack: `docker compose up --build`
+- Include compiler service profile: `docker compose --profile tools up --build`
+- Run compiler on demand: `docker compose run --rm compiler /input /output`
+
 ## Known Limitations
 * Package creation may have some file permission issues. If a package does not install, check that the files in the testing/scripts directory are executable.
 * Choices actions can currently only point to objects, not other types such as integers.
