@@ -1,6 +1,7 @@
 *.out
 *.bak
 .DS_Store
+.docs/
 .devcontainer
 .vscode
 *.pyc
