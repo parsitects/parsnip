@@ -2,6 +2,7 @@
 *.bak
 .DS_Store
 .docs/
+.tmp/
 .devcontainer
 .vscode
 *.pyc
