@@ -13,16 +13,28 @@ The Parsnip ecosystem consists of three parts:
 
 ## Project Structure
 
-* backend: folder containing the code for the backend; used for processing parsnip IL files to create zeek parsers
-* docs: folder containing project documentation
-* frontend: folder containing the code for the web frontend; used for creating parsnip IL files
-* LICENSE.txt: code license file
-* NOTICE.txt: code notice file
-* README.md: this file
+Parsnip is organized as a superproject with three git submodules:
 
-## Documentation
+* `parsnip-backend/`: Flask/SQLAlchemy API that processes Parsnip IL into Spicy/Zeek parser packages
+* `parsnip-frontend/`: Angular GUI for authoring Parsnip IL
+* `parsnip-compiler/`: Python CLI that compiles IL bundles into generated parser sources
+* `LICENSE.txt`: code license file
+* `NOTICE.txt`: code notice file
+* `README.md`: this file
 
-Please refer to [docs/parsnip.md](docs/parsnip.md) for more information on using Parsnip.
+Each submodule has its own README with module-specific details.
+
+## Prerequisites
+
+Clone with submodules, or initialize them after cloning:
+
+```bash
+git clone --recurse-submodules <url>
+# or, in an existing clone:
+git submodule update --init --recursive
+```
+
+All Docker workflows below assume the submodules are checked out. Without them, the root `docker compose` commands have nothing to build.
 
 ## Docker Workflows
 
