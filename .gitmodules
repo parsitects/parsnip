@@ -9,4 +9,4 @@
 [submodule "parsnip-compiler"]
 	path = parsnip-compiler
 	url = https://github.com/parsitects/parsnip-compiler.git
-	branch = main
+	branch = compiler-validation-invariants
