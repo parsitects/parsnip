@@ -48,19 +48,20 @@ services:
       - parsnip-network
     restart: unless-stopped
 
-  # Compiler - CLI tool, not a persistent service
-  # Usage: docker-compose run --rm compiler /input /output
-  compiler:
+  # Long-running compiler microservice. Backs the frontend Compile tab.
+  # Standalone CLI users should use parsnip-compiler/docker-compose.yml or
+  # `docker run --rm parsnip-compiler <input> <output>` directly.
+  compiler-service:
     build:
       context: ./parsnip-compiler
       dockerfile: Dockerfile
-    container_name: parsnip-compiler
-    profiles: ["tools"]
-    volumes:
-      - ./compiler-input:/input
-      - ./compiler-output:/output
+    container_name: parsnip-compiler-service
+    entrypoint: ["python3", "/app/compiler_service.py"]
+    ports:
+      - "5001:5001"
     networks:
       - parsnip-network
+    restart: unless-stopped
 
 volumes:
   postgres_data:
