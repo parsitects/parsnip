@@ -17,12 +17,11 @@ The superproject tracks three git submodules plus shared top-level orchestration
 
 | path | purpose |
 | --- | --- |
-| `parsnip-backend/` | Flask/SQLAlchemy API. Stores IL entities, emits IL bundles and compiled parser packages. Branch `v2_integration`. |
+| `parsnip-backend/` | Flask/SQLAlchemy API. Stores IL entities, emits IL bundles, proxies compile requests. Branch `v2_integration`. |
 | `parsnip-frontend/` | Angular GUI for authoring IL. Branch `v2_integration`. |
-| `parsnip-compiler/` | Python CLI that turns an IL bundle into generated parser sources. Branch `compiler-validation-invariants`. |
-| `docker-compose.yml` | Wires db + backend + frontend into one stack; compiler is a profiled one-shot service. |
+| `parsnip-compiler/` | Python package that turns an IL bundle into a Zeek/Spicy parser package. Ships a CLI (`main.py`) and an HTTP microservice (`compiler_service.py`) that also runs `spicyz`. Branch `compiler-validation-invariants`. |
+| `docker-compose.yml` | Wires db + backend + frontend + long-running compiler microservice into one stack. |
 | `tooling/` | Cross-boundary helpers that span frontend + backend + canonical baseline. See `tooling/README.md`. |
-| `compiler-input/`, `compiler-output/` | Volume mount points used when running the compiler service from the repo root. |
 | `LICENSE.txt`, `NOTICE.txt` | License and notice. |
 
 Each submodule has its own README with module-specific setup.
@@ -41,17 +40,17 @@ The root `docker compose` commands build from the submodule trees and have nothi
 
 ## Docker workflows
 
-Root-level workflows build and run all three images from this repo:
+Root-level workflows build and run all four images from this repo:
 
-- UI + API stack: `docker compose up --build`
-- Include the compiler service profile: `docker compose --profile tools up --build`
-- Run the compiler on demand against `compiler-input/` and `compiler-output/`: `docker compose run --rm compiler /input /output`
+- Full stack (db + backend + frontend + compiler microservice): `docker compose up --build`
+
+The UI's **Compile** tab posts a `.pil` upload to `/api/parsers/compile`, which the backend proxies to the compiler microservice. The service runs the parsnip compiler and then `spicyz`, returning the generated source tree + a Zeek-loadable `.hlto` alongside the captured toolchain logs.
 
 Standalone submodule workflows still work per-repo:
 
 - Frontend: `cd parsnip-frontend && docker compose up --build`
 - Backend: `cd parsnip-backend && docker compose up --build`
-- Compiler: `cd parsnip-compiler && docker compose run --rm compiler /input /output`
+- Compiler CLI: `cd parsnip-compiler && docker compose run --rm compiler /input /output` (writes to `./input` → `./output` inside that repo).
 
 ### Services and ports
 
@@ -60,7 +59,7 @@ Standalone submodule workflows still work per-repo:
 | `db` | `parsnip-db` | `5432` | postgres:16, named volume `postgres_data`. |
 | `backend` | `parsnip-backend` | `5000` | Flask API. Depends on `db` healthcheck. |
 | `frontend` | `parsnip-frontend` | `4200 → 80` | Angular bundle served by nginx; `/api` is rewritten to the backend. |
-| `compiler` | `parsnip-compiler` | — | CLI-only, under profile `tools`. Mounts `./compiler-input` and `./compiler-output`. |
+| `compiler-service` | `parsnip-compiler-service` | `5001` | HTTP microservice wrapping the compiler + `spicyz`. Image is based on `zeek/zeek:8.0.7`. |
 
 All services share the `parsnip-network` bridge.
 
