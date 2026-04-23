@@ -5,7 +5,7 @@
 [submodule "parsnip-backend"]
 	path = parsnip-backend
 	url = https://github.com/parsitects/parsnip-backend.git
-	branch = v2_integration
+	branch = api_development_petech
 [submodule "parsnip-compiler"]
 	path = parsnip-compiler
 	url = https://github.com/parsitects/parsnip-compiler.git
