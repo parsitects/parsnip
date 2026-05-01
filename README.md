@@ -43,6 +43,7 @@ The root `docker compose` commands build from the submodule trees and have nothi
 Root-level workflows build and run all four images from this repo:
 
 - Full stack (db + backend + frontend + compiler microservice): `docker compose up --build`
+- If there are issues with frontend container, try running `docker compose down -v` before re-running the above command. Please not note that this may wipe all existing parsers.
 
 The UI's **Compile** tab posts a `.pil` upload to `/api/parsers/compile`, which the backend proxies to the compiler microservice. The service runs the parsnip compiler and then `spicyz`, returning the generated source tree + a Zeek-loadable `.hlto` alongside the captured toolchain logs.
 
