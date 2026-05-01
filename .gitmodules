@@ -1,0 +1,12 @@
+[submodule "parsnip-frontend"]
+	path = parsnip-frontend
+	url = https://github.com/parsitects/parsnip-frontend.git
+	branch = v2_integration
+[submodule "parsnip-backend"]
+	path = parsnip-backend
+	url = https://github.com/parsitects/parsnip-backend.git
+	branch = api_development_petech
+[submodule "parsnip-compiler"]
+	path = parsnip-compiler
+	url = https://github.com/parsitects/parsnip-compiler.git
+	branch = compiler-validation-invariants
